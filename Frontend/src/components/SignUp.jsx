@@ -16,21 +16,44 @@ const SignUp = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        
         const { name, email, password } = formData;
-
+        
+        // Validate inputs first
         if (!name || !email || !password) {
-            setError("All fields are required");
-        } else if (!email.includes("@")) {
-            setError("Enter a valid email");
+            setError('All fields are required');
+            return;
+        } else if (!email.includes('@')) {
+            setError('Enter a valid email');
+            return;
         } else if (password.length < 6) {
-            setError("Password must be at least 6 characters");
+            setError('Password must be at least 6 characters');
+            return;
         } else {
-            setError("");
-            alert("Form submitted!");
+            setError('');
         }
-    };
+        
+        
+        try {
+            const response = await fetch("http://localhost:8080/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+            alert(data.message || "User registered successfully!");
+            } else {
+            setError(data.message || "Registration failed");
+            }
+        } catch (error) {
+            alert("Error: " + error.message);
+        }
+        };
 
     const containerStyle = {
         display: "flex",

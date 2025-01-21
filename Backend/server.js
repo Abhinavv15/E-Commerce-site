@@ -1,35 +1,39 @@
-const express=require('express');
-const mongoose=require('mongoose');
+const express = require('express');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const { userModel } = require('./model/user.model');
+const cors = require('cors');
 
+const app = express();
+const PORT = 8080;
 
-const app=express()
-const PORT=8080
+app.use(express.json());
+app.use(cors());
 
-app.use(express.json())
+let connection = mongoose.connect("mongodb+srv://abhinav15:Abhinav2006@cluster0.noiul.mongodb.net/");
 
+app.get("/ping", (req, res) => {
+    res.send("pong");
+});
 
+app.post("/create", async (req, res) => {
+    let payLoad = req.body;
 
-let connection= mongoose.connect("mongodb+srv://abhinav15:Abhinav2006@cluster0.noiul.mongodb.net/")
-
-app.get("/ping",(req,res)=>{
-    res.send("pong")
-})
-
-app.post("/create",async(req,res)=>{
-    let payLoad=req.body;
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(payLoad.password, 10);
+    payLoad.password = hashedPassword; // Replace the plain password with the hashed one
 
     try {
-        let new_user= new userModel(payLoad);
+        let new_user = new userModel(payLoad);
         await new_user.save();
-        res.send({"message":"Hurray! Successfully saved the user to the database"})
-    }catch (error){
+        res.send({ "message": "Hurray! Successfully saved the user to the database" });
+    } catch (error) {
         console.log(error);
-        res.send({"error":error})
+        res.send({ "error": error });
     }
 });
 
-const multer  = require('multer')
+const multer = require('multer');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads/'); // Save files in the uploads folder
@@ -61,15 +65,13 @@ app.post('/upload', upload.single('myFile'), (req, res) => {
     }
 });
 
+app.listen(PORT, async () => {
+    try {
+        await connection;
+        console.log("Successfully connected to MongoDB");
+    } catch (error) {
+        console.log(error);
+    }
 
-
-app.listen(PORT,async()=>{
-try{
-    await connection;
-    console.log("Successfully connected to MongoDB");
-} catch (error){
-    console.log(error);
-}
-
-    console.log(`Server is running on port ${PORT}`)
-})
+    console.log(`Server is running on port ${PORT}`);
+});
