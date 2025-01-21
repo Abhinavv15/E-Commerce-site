@@ -55,3 +55,4 @@ This project is all about creating a fully functional e-commerce website where u
 ## Milestone 2 - **Added Login Page in Frontend**
 ## Milestone 3 - **Server.js added and connected to MongosDB**
 ## Milestone 4 - **Updated server.js with multer**
+## Milestone 5 - **Creating the Signup page an checking the form validation**
