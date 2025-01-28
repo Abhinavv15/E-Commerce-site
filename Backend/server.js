@@ -1,13 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
 const { userModel } = require('./model/user.model');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const {productModel} = require('./model/product.model');
+const {productRouter} = require('./routes/product.route');
 
 require('dotenv').config();
 const app = express();
-
 
 app.use(express.json());
 app.use(cors());
@@ -35,39 +37,7 @@ app.post("/create", async (req, res) => {
     }
 });
 
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads/'); // Save files in the uploads folder
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname); // Add a unique identifier to avoid name conflicts
-    }
-});
-
-const upload = multer({ storage: storage });
-
-// POST route for file upload
-app.post('/upload', upload.single('myFile'), (req, res) => {
-    try {
-        console.log('File uploaded successfully:');
-        console.log(req.file); // Log the uploaded file's details
-
-        res.status(200).send({
-            message: 'File uploaded successfully',
-            fileDetails: req.file // Include file details in the response
-        });
-    } catch (error) {
-        console.error('Error during file upload:', error);
-        res.status(500).send({
-            message: 'File upload failed',
-            error: error.message
-        });
-    }
-});
-
-
+// Removed the upload route
 
 app.post("/signup" , async (req,res) => {
     console.log(req.body)
@@ -87,9 +57,7 @@ app.post("/signup" , async (req,res) => {
             res.send("Something went wrong,pls try again later")
         }
     }
-})
-
-
+});
 
 app.post("/login",async(req,res)=>{
     const {email,password}=req.body;
@@ -113,7 +81,9 @@ app.post("/login",async(req,res)=>{
     } catch (error) {
         res.json({"Message":"Something went wrong!"})
     }
-})
+});
+
+app.use("/product",productRouter);
 
 app.listen(process.env.PORT, async () => {
     try {
