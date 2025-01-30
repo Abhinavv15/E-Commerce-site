@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 const Login = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Username:", username);
+        console.log("Email:", email);
         console.log("Password:", password);
     };
 
@@ -66,12 +66,12 @@ const Login = () => {
             <form style={formStyle} onSubmit={handleSubmit}>
                 <h2 style={headingStyle}>Login</h2>
                 <div>
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                         type="text"
-                        id="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         style={inputStyle}
                     />
@@ -87,9 +87,7 @@ const Login = () => {
                         style={inputStyle}
                     />
                 </div>
-                <button type="submit" style={buttonStyle}>
-                    Login
-                </button>
+                <button type="submit" style={buttonStyle}>Login</button>
             </form>
         </div>
     );

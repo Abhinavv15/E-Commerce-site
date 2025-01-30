@@ -14,10 +14,7 @@ const userSchema=mongoose.Schema({
         type:String,
         required:true,
     },
-    age:{
-        type:Number,
-        required:true,
-    },
+
 
 
 })
