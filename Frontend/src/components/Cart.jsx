@@ -1,7 +1,9 @@
-
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-const Cart = ({ product }) => {
+const Cart = ({ product, onDelete }) => {
+    const navigate = useNavigate();
+
     const cartStyle = {
         border: "1px solid #ddd",
         borderRadius: "8px",
@@ -59,9 +61,24 @@ const Cart = ({ product }) => {
         cursor: "pointer",
     };
 
+    const editButton = {
+        flex: "1",
+        padding: "8px",
+        fontSize: "14px",
+        color: "white",
+        border: "1px solid #ddd",
+        borderRadius: "5px",
+        backgroundColor: "red",
+        cursor: "pointer",
+    };
+
+    const handleEdit = () => {
+        navigate(`/edit/${product._id}`);
+    };
+
     return (
         <div className="cart" style={cartStyle}>
-            <img src={product.productImage} alt={product.productName} style={imgStyle} />
+            <img src={`http://localhost:8080${product.productImage[0]}`} alt={product.productName} style={imgStyle} />
             <h3 style={h3Style}>{product.productName}</h3>
             <p style={pStyle}>{product.productDescription}</p>
             <p style={priceStyle}>₹{product.productPrice}</p>
@@ -69,6 +86,8 @@ const Cart = ({ product }) => {
                 <button style={buttonStyle}>Add to Cart</button>
                 <button style={buttonStyle}>Buy Now</button>
                 <button style={buttonStyle}>Wishlist</button>
+                <button style={editButton} onClick={handleEdit}>Edit</button>
+                <button style={buttonStyle} onClick={() => onDelete(product._id)}>Delete</button>
             </div>
         </div>
     );
@@ -76,11 +95,13 @@ const Cart = ({ product }) => {
 
 Cart.propTypes = {
     product: PropTypes.shape({
-        productImage: PropTypes.string.isRequired,        
+        _id: PropTypes.string.isRequired,
+        productImage: PropTypes.arrayOf(PropTypes.string).isRequired,
         productName: PropTypes.string.isRequired,
         productDescription: PropTypes.string,
         productPrice: PropTypes.number.isRequired,
     }).isRequired,
+    onDelete: PropTypes.func.isRequired,
 };
 
 export default Cart;

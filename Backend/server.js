@@ -5,7 +5,7 @@ const { userModel } = require('./model/user.model');
 const cors = require('cors');
 const { productRouter } = require('./routes/product.route');
 const { loginRouter } = require("./routes/login.route");
-const { signupRouter } = require("./routes/signup.route")
+const { signupRouter } = require("./routes/signup.route");
 
 require('dotenv').config();
 const app = express();
@@ -21,10 +21,8 @@ app.get("/ping", (req, res) => {
 
 app.post("/create", async (req, res) => {
     let payLoad = req.body;
-
-    // Hash the password
     const hashedPassword = await bcrypt.hash(payLoad.password, 10);
-    payLoad.password = hashedPassword; // Replace the plain password with the hashed one
+    payLoad.password = hashedPassword;
 
     try {
         let new_user = new userModel(payLoad);
@@ -36,12 +34,8 @@ app.post("/create", async (req, res) => {
     }
 });
 
-
-
 app.use(signupRouter);
-
 app.use(loginRouter);
-
 app.use("/product", productRouter);
 
 app.listen(process.env.PORT, async () => {
@@ -52,5 +46,5 @@ app.listen(process.env.PORT, async () => {
         console.log(error);
     }
 
-    console.log(`Server is running on port ${process.env.PORT}`);
+    console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });

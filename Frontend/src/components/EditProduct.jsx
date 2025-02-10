@@ -1,45 +1,45 @@
-import { useState } from "react";
+import  { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const ProductForm = () => {
+const EditProduct = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        productName: "",
-        productDescription: "",
-        productPrice: "",
-        productImage: null, 
+        productName: '',
+        productDescription: '',
+        productPrice: '',
+        productImage: ''
     });
 
-    const [error, setError] = useState("");
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const response = await fetch(`http://localhost:8080/api/products/${id}`);
+            const data = await response.json();
+            setFormData(data.data);
+        };
+
+        fetchProduct();
+    }, [id]);
 
     const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-
-        if (type === "file") {
-            setFormData({
-                ...formData,
-                [name]: files[0], 
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
-        }
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const { productName, productDescription, productPrice, productImage } = formData;
-
-        if (!productName || !productDescription || !productPrice || !productImage) {
-            setError('All fields are required');
-            return;
-        } else {
-            setError('');
+        try {
+            await fetch(`http://localhost:8080/api/products/update/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            navigate('/');
+        } catch (error) {
+            alert("Error updating product: " + error.message);
         }
-
-        alert("Product added successfully!");
-        console.log(formData)
     };
 
     const containerStyle = {
@@ -54,7 +54,7 @@ const ProductForm = () => {
 
     const formStyle = {
         width: "100%",
-        maxWidth: "360px",
+        maxWidth: "500px",
         padding: "20px",
         backgroundColor: "#fff",
         borderRadius: "8px",
@@ -75,11 +75,17 @@ const ProductForm = () => {
 
     const inputStyle = {
         width: "100%",
-        maxWidth: "300px",
         padding: "10px",
         border: "1px solid #ccc",
         borderRadius: "5px",
         fontSize: "16px",
+        boxSizing: "border-box",
+    };
+
+    const textareaStyle = {
+        ...inputStyle,
+        minHeight: "100px",
+        resize: "vertical",
     };
 
     const labelStyle = {
@@ -87,12 +93,6 @@ const ProductForm = () => {
         display: "block",
         fontWeight: "bold",
         color: "#555",
-    };
-
-    const errorStyle = {
-        color: "red",
-        marginBottom: "15px",
-        fontSize: "14px",
     };
 
     const buttonStyle = {
@@ -110,7 +110,8 @@ const ProductForm = () => {
     return (
         <div style={containerStyle}>
             <form style={formStyle} onSubmit={handleSubmit}>
-                <h2 style={headingStyle}>Add Product</h2>
+                <h2 style={headingStyle}>Edit Product</h2>
+                
                 <div style={inputContainerStyle}>
                     <label style={labelStyle} htmlFor="productName">
                         Product Name:
@@ -122,53 +123,59 @@ const ProductForm = () => {
                         value={formData.productName}
                         onChange={handleChange}
                         style={inputStyle}
+                        required
                     />
                 </div>
+
                 <div style={inputContainerStyle}>
                     <label style={labelStyle} htmlFor="productDescription">
                         Product Description:
                     </label>
-                    <input
-                        type="text"
+                    <textarea
                         id="productDescription"
                         name="productDescription"
                         value={formData.productDescription}
                         onChange={handleChange}
-                        style={inputStyle}
+                        style={textareaStyle}
+                        required
                     />
                 </div>
+
                 <div style={inputContainerStyle}>
                     <label style={labelStyle} htmlFor="productPrice">
                         Product Price:
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         id="productPrice"
                         name="productPrice"
                         value={formData.productPrice}
                         onChange={handleChange}
                         style={inputStyle}
+                        required
                     />
                 </div>
+
                 <div style={inputContainerStyle}>
                     <label style={labelStyle} htmlFor="productImage">
-                        Product Image:
+                        Product Image URL:
                     </label>
                     <input
-                        type="file"
+                        type="text"
                         id="productImage"
                         name="productImage"
+                        value={formData.productImage}
                         onChange={handleChange}
                         style={inputStyle}
                     />
                 </div>
-                {error && <p style={errorStyle}>{error}</p>}
+
                 <button type="submit" style={buttonStyle}>
-                    Add Product
+                    Update Product
                 </button>
             </form>
         </div>
     );
 };
 
-export default ProductForm;
+export default EditProduct;

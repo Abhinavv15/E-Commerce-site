@@ -1,23 +1,32 @@
 import { useNavigate } from "react-router-dom";
-// import productData from "./data.json"
 import Cart from "./Cart";
 import { useEffect, useState } from "react";
 
 function Home() {
     const navigate = useNavigate();
+    let [productData, setProductData] = useState([]);
 
-    let [productData,setProductData]=useState([]);
-
-    useEffect(()=>{
-        fetch("http://localhost:8080/product").then((res)=>{
+    useEffect(() => {
+        fetch("http://localhost:8080/product").then((res) => {
             return res.json();
-        }).then((res)=>{
-            console.log(res)
-            setProductData(res.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
-    })
+        }).then((res) => {
+            console.log(res);
+            setProductData(res.data);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+    const handleDelete = async (id) => {
+        const response = await fetch(`http://localhost:8080/product/${id}`, {
+            method: 'DELETE',
+        });
+        if (response.ok) {
+            setProductData((prevProducts) => prevProducts.filter(product => product._id !== id));
+        } else {
+            console.error("Failed to delete the product");
+        }
+    };
 
     const navBarStyle = {
         display: "flex",
@@ -66,7 +75,7 @@ function Home() {
 
     const cartStyle = {
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", // Responsive layout
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
         gap: "30px",
         padding: "40px",
         backgroundColor: "#f1f1f1",
@@ -92,7 +101,7 @@ function Home() {
             </div>
             <div style={cartStyle}>
                 {productData?.map((product) => (
-                    <Cart key={product.id} product={product}></Cart>
+                    <Cart key={product._id} product={product} onDelete={handleDelete}></Cart>
                 ))}
             </div>
         </div>

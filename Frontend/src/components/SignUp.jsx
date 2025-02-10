@@ -21,7 +21,6 @@ const SignUp = () => {
         
         const { name, email, password } = formData;
         
-        // Validate inputs first
         if (!name || !email || !password) {
             setError('All fields are required');
             return;
@@ -34,7 +33,6 @@ const SignUp = () => {
         } else {
             setError('');
         }
-        
         
         try {
             const response = await fetch("http://localhost:8080/create", {
@@ -53,7 +51,7 @@ const SignUp = () => {
         } catch (error) {
             alert("Error: " + error.message);
         }
-        };
+    };
 
     const containerStyle = {
         display: "flex",
@@ -87,8 +85,8 @@ const SignUp = () => {
     };
 
     const inputStyle = {
-        width: "100%",       // Keep it responsive
-        maxWidth: "300px",   // Reduced width of the input fields
+        width: "100%",
+        maxWidth: "300px",
         padding: "10px",
         border: "1px solid #ccc",
         borderRadius: "5px",
