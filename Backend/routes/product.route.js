@@ -1,104 +1,98 @@
-const express = require('express');
-const multer = require('multer');
-const { productModel } = require('../model/product.model'); 
+const express=require("express")
+const multer = require("multer");
+const { productModel } = require("../model/product.model");
 
-let productRouter = express.Router();
+let productRouter = express.Router()
 
-productRouter.get("/", async (req, res) => {
+productRouter.get("/",async(req,res) => {
     try {
-        const products = await productModel.find();
-        res.send({"message":"Successfully retrieved the data from the database",data:products});
+        const product=await productModel.find()
+        res.send({"message": "Successfully retrived the data from database",data:product})
     } catch (error) {
-        res.send({"error-message":error});
+        res.send({"Error-message":error})
     }
-});
+})
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads/'); 
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname);
-    }
-});
-
-const upload = multer({ storage: storage });
-
-productRouter.get("/test-products", async (req, res) => {
+productRouter.get("/:id",async(req,res) => {
+    let id=req.params.id
     try {
-        const products = await productModel.find();
-        res.send({ "message": "Successfully retrieved the products", data: products });
+        const product=await productModel.findById(id)
+        res.send({"message": "Successfully retrived the data from database",data:product})
     } catch (error) {
-        res.send({ "error-message": error });
+        res.send({"Error-message":error})
     }
-});
+})
 
-productRouter.post("/create", upload.array('productImage', 12), async (req, res) => {
+productRouter.delete("/delete/:id", async (req, res) => {
+    const id = req.params.id;
     try {
-        const { productName, productDescription, productPrice } = req.body;
-
-        const imgPaths = req.files.map((file) => `/uploads/${file.filename}`);
-
-        const newProduct = new productModel({
-            productName,
-            productDescription,
-            productPrice,
-            productImage: imgPaths
-        });
-
-        await newProduct.save();
-        res.status(201).json({ message: "Product created successfully" });
-
+        const deletedProduct = await productModel.findByIdAndDelete(id);
+        if (!deletedProduct) {
+            return res.status(404).send({ "message": "Product Not found" });
+        }
+        res.status(200).send({ "message": "Successfully deleted the product", data: deletedProduct });
     } catch (error) {
-        res.status(500).json({ message: "Error creating product", error: error.message });
-        console.log(error);
+        res.status(500).json({ "error": error.message });
     }
 });
 
 productRouter.put("/update/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { productName, productDescription, productPrice, productImage } = req.body;
 
+    const id = req.params.id;
+    const { productName, productDescription, productPrice, productImages } = req.body;
+
+    try {
         const updatedProduct = await productModel.findByIdAndUpdate(id, {
             productName,
             productDescription,
             productPrice,
-            productImage
+            productImages
         }, { new: true });
 
         if (!updatedProduct) {
-            return res.status(404).json({ message: "Product not found" });
+            return res.status(404).send({ "message": "Product Not found" });
         }
-
-        res.status(200).json({ message: "Product updated successfully", data: updatedProduct });
+        res.status(200).send({ "message": "Successfully updated the product", data: updatedProduct });
     } catch (error) {
-        res.status(500).json({ message: "Error updating product", error: error.message });
+        res.status(500).json({ "error": error.message });
     }
 });
 
-productRouter.get("/filter-by-email", async (req, res) => {
-    const { email } = req.query;
+const storage=multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'./uploads/')
+    },
+    filename:function(req,file,cb){
+        cb(null,file.fieldname+'-'+Date.now()+"-"+file.originalname)
+    }
+});
+
+const upload = multer({ storage: storage })
+
+productRouter.post("/create",upload.array('productImage',12),async(req,res) => {
+
     try {
-        const products = await productModel.find({ userEmail: email });
-        res.status(200).json({ message: "Filtered products retrieved successfully", data: products });
-    } catch (error) {
-        res.status(500).json({ message: "Error retrieving filtered products", error: error.message });
-    }
-});
+        const {productName,productDescription,productPrice}=req.body
 
-productRouter.delete("/:id", async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deletedProduct = await productModel.findByIdAndDelete(id);
-        if (!deletedProduct) {
-            return res.status(404).json({ message: "Product not found" });
-        }
-        res.status(200).json({ message: "Product deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Error deleting product", error: error.message });
-    }
-});
+    const imgPaths=req.files.map((file) =>`/uploads/${file.filename}` )
 
-module.exports = { productRouter };
+
+    const newProduct= new productModel({
+        productName,
+        productDescription,
+        productPrice,
+        productImages:imgPaths
+    });
+
+
+    await newProduct.save()
+    res.json({"message":"Hurray! Successfully added the product on database",product:newProduct})
+
+    } catch (error) {
+        console.log(error)
+        res.json({error})
+    }
+
+})
+
+module.exports={productRouter}

@@ -16,40 +16,19 @@ const SignUp = () => {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        
         const { name, email, password } = formData;
-        
+
         if (!name || !email || !password) {
-            setError('All fields are required');
-            return;
-        } else if (!email.includes('@')) {
-            setError('Enter a valid email');
-            return;
+            setError("All fields are required");
+        } else if (!email.includes("@")) {
+            setError("Enter a valid email");
         } else if (password.length < 6) {
-            setError('Password must be at least 6 characters');
-            return;
+            setError("Password must be at least 6 characters");
         } else {
-            setError('');
-        }
-        
-        try {
-            const response = await fetch("http://localhost:8080/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-            });
-            
-            const data = await response.json();
-            
-            if (response.ok) {
-            alert(data.message || "User registered successfully!");
-            } else {
-            setError(data.message || "Registration failed");
-            }
-        } catch (error) {
-            alert("Error: " + error.message);
+            setError("");
+            alert("Form submitted!");
         }
     };
 
@@ -85,8 +64,8 @@ const SignUp = () => {
     };
 
     const inputStyle = {
-        width: "100%",
-        maxWidth: "300px",
+        width: "100%",       
+        maxWidth: "300px",   
         padding: "10px",
         border: "1px solid #ccc",
         borderRadius: "5px",
@@ -108,7 +87,7 @@ const SignUp = () => {
 
     const buttonStyle = {
         padding: "12px",
-        width: "100%",
+        width: "90%",
         backgroundColor: "#007bff",
         color: "#fff",
         border: "none",

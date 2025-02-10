@@ -1,28 +1,69 @@
+import { useNavigate } from "react-router-dom";
+import Cart from "./cart";
 import { useEffect, useState } from "react";
-import Cart from "./Cart";
-
 
 function Home() {
-    let [productData, setProductData] = useState([]);
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        fetch("http://localhost:8080/product").then((res) => res.json())
-        .then((res) => {
-            console.log(res);
-            setProductData(res.data);
+    let [productData,setProductData]=useState([]);
+
+    useEffect(()=>{
+        fetch("http://localhost:8080/product").then((res)=>{
+            return res.json();
+        }).then((res)=>{
+            console.log(res)
+        setProductData(res.data)
+        console.log(res.data) 
+
+        }).catch((err)=>{
+            console.log(err)
         })
-        .catch((err) => console.log(err));
-    }, []);
+    })
 
-    const handleDelete = async (id) => {
-        const response = await fetch(`http://localhost:8080/product/${id}`, {
-            method: 'DELETE',
-        });
-        if (response.ok) {
-            setProductData((prevProducts) => prevProducts.filter(product => product._id !== id));
-        } else {
-            console.error("Failed to delete the product");
+
+    const handleDelete=async(id)=> {
+        try {
+            let response=await axios.delete(`http://localhost:8080/product/delete/${id}`)
+            console.log(response.data.message)
+            const filteredData=productData.filter((e) =>e._id!=id)
+            setProductData(filteredData)
+        } catch (error) {
+            console.log(error)
         }
+    }
+
+    const navBarStyle = {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "10px 20px",
+        backgroundColor: "#007bff",
+        color: "white",
+        position: "sticky",
+        top: "0",
+        width: "100%",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        boxSizing: "border-box",
+        zIndex: 10,
+    };
+
+    const logoStyle = {
+        fontSize: "24px",
+        fontWeight: "bold",
+        cursor: "pointer",
+    };
+
+    const linkContainerStyle = {
+        display: "flex",
+        gap: "20px",
+    };
+
+    const linkStyle = {
+        color: "white",
+        textDecoration: "none",
+        cursor: "pointer",
+        fontSize: "16px",
+        fontWeight: "bold",
     };
 
     const containerStyle = {
@@ -30,6 +71,7 @@ function Home() {
         alignItems: "center",
         justifyContent: "center",
         height: "150px",
+        boxSizing: "border-box",
         padding: "20px",
         backgroundColor: "#f8f9fa",
         textAlign: "center",
@@ -37,7 +79,7 @@ function Home() {
 
     const cartStyle = {
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", 
         gap: "30px",
         padding: "40px",
         backgroundColor: "#f1f1f1",
@@ -45,13 +87,26 @@ function Home() {
 
     return (
         <div>
-
+            <nav style={navBarStyle}>
+                <div style={logoStyle} onClick={() => navigate("/")}>
+                    E-Commerce
+                </div>
+                <div style={linkContainerStyle}>
+                    <span style={linkStyle} onClick={() => navigate("/signup")}>
+                        Sign Up
+                    </span>
+                    <span style={linkStyle} onClick={() => navigate("/login")}>
+                        Login
+                    </span>
+                </div>
+            </nav>
             <div style={containerStyle}>
                 <h1>Welcome to E-Commerce</h1>
             </div>
             <div style={cartStyle}>
                 {productData?.map((product) => (
-                    <Cart key={product._id} product={product} onDelete={handleDelete}></Cart>
+                    <Cart key={product.id} product={product} onDelete={() => handleDelete(product._id)}></Cart>
+
                 ))}
             </div>
         </div>

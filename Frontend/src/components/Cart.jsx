@@ -1,8 +1,26 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const Cart = ({ product, onDelete }) => {
+const Cart = ({ product }) => {
     const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/editProduct/${product._id}`);
+    };
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+        if (confirmDelete) {
+            try {
+                const response = await axios.delete(`http://localhost:8080/product/delete/${product._id}`);
+                alert(response.data.message);
+                // Optionally, you can refresh the cart or redirect after deletion
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     const cartStyle = {
         border: "1px solid #ddd",
@@ -72,13 +90,9 @@ const Cart = ({ product, onDelete }) => {
         cursor: "pointer",
     };
 
-    const handleEdit = () => {
-        navigate(`/edit/${product._id}`);
-    };
-
     return (
         <div className="cart" style={cartStyle}>
-            <img src={`http://localhost:8080${product.productImage[0]}`} alt={product.productName} style={imgStyle} />
+            <img src={product.productImage} alt={product.productName} style={imgStyle} />
             <h3 style={h3Style}>{product.productName}</h3>
             <p style={pStyle}>{product.productDescription}</p>
             <p style={priceStyle}>₹{product.productPrice}</p>
@@ -86,8 +100,8 @@ const Cart = ({ product, onDelete }) => {
                 <button style={buttonStyle}>Add to Cart</button>
                 <button style={buttonStyle}>Buy Now</button>
                 <button style={buttonStyle}>Wishlist</button>
-                <button style={editButton} onClick={handleEdit}>Edit</button>
-                <button style={buttonStyle} onClick={() => onDelete(product._id)}>Delete</button>
+                <button style={editButton} onClick={handleClick}>Edit</button>
+                <button style={editButton} onClick={handleDelete}>Delete</button>
             </div>
         </div>
     );
@@ -95,13 +109,11 @@ const Cart = ({ product, onDelete }) => {
 
 Cart.propTypes = {
     product: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        productImage: PropTypes.arrayOf(PropTypes.string).isRequired,
+        productImage: PropTypes.string.isRequired,
         productName: PropTypes.string.isRequired,
         productDescription: PropTypes.string,
         productPrice: PropTypes.number.isRequired,
     }).isRequired,
-    onDelete: PropTypes.func.isRequired,
 };
 
 export default Cart;
