@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ProductForm = ({ initialData, onDelete }) => {
+const ProductForm = ({ initialData = {}, onDelete }) => {
 
     const [formData, setFormData] = useState({
         productName: initialData.productName || "",
@@ -202,9 +202,7 @@ const ProductForm = ({ initialData, onDelete }) => {
                     />
                 </div>
                 {error && <p style={errorStyle}>{error}</p>}
-                <button type="button" onClick={handleDelete} style={buttonStyle}>
-                    Delete Product
-                </button>
+
                 <button type="submit" style={buttonStyle}>
 
                     Add Product

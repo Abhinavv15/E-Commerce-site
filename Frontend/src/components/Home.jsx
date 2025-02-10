@@ -32,40 +32,6 @@ function Home() {
         }
     }
 
-    const navBarStyle = {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 20px",
-        backgroundColor: "#007bff",
-        color: "white",
-        position: "sticky",
-        top: "0",
-        width: "100%",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-        boxSizing: "border-box",
-        zIndex: 10,
-    };
-
-    const logoStyle = {
-        fontSize: "24px",
-        fontWeight: "bold",
-        cursor: "pointer",
-    };
-
-    const linkContainerStyle = {
-        display: "flex",
-        gap: "20px",
-    };
-
-    const linkStyle = {
-        color: "white",
-        textDecoration: "none",
-        cursor: "pointer",
-        fontSize: "16px",
-        fontWeight: "bold",
-    };
-
     const containerStyle = {
         display: "flex",
         alignItems: "center",
@@ -87,19 +53,6 @@ function Home() {
 
     return (
         <div>
-            <nav style={navBarStyle}>
-                <div style={logoStyle} onClick={() => navigate("/")}>
-                    E-Commerce
-                </div>
-                <div style={linkContainerStyle}>
-                    <span style={linkStyle} onClick={() => navigate("/signup")}>
-                        Sign Up
-                    </span>
-                    <span style={linkStyle} onClick={() => navigate("/login")}>
-                        Login
-                    </span>
-                </div>
-            </nav>
             <div style={containerStyle}>
                 <h1>Welcome to E-Commerce</h1>
             </div>
