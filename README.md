@@ -168,5 +168,15 @@ This project is all about creating a fully functional e-commerce website where u
    - Remove the deleted product from the UI without refreshing the page.
 
 
+### Milestone 15: Responsive Navbar  
+
+1. **Create Navbar Component:**  
+   - Add links for Home, My Products, Add Product, and Cart.  
+
+2. **Make It Responsive:**  
+   - Ensure the navbar works well on all screen sizes.  
+
+3. **Integrate with Pages:**  
+   - Add the navbar to all pages for smooth navigation.  
 
 
