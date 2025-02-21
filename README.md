@@ -1,3 +1,4 @@
+
 # Project Title:  
 **E-Commerce Website**
 
@@ -179,4 +180,65 @@ This project is all about creating a fully functional e-commerce website where u
 3. **Integrate with Pages:**  
    - Add the navbar to all pages for smooth navigation.  
 
+
+## Milestone 16: Product Info Page
+
+### Learning Goals  
+- Create a new page to display product details.  
+- Add a quantity selector and "Add to Cart" button.  
+
+### Steps  
+1. Build a new page to display product data.  
+2. Add quantity selection and "Add to Cart" button.  
+
+---
+
+## Milestone 17: Add to Cart Backend
+
+### Learning Goals  
+- Modify the user schema to store cart products.  
+- Create an endpoint to add products to the cart.  
+
+### Steps  
+1. Update the user schema to include cart products.  
+2. Write an endpoint to store product details in the cart.  
+
+---
+
+## Milestone 18: Fetch Cart Products
+
+### Learning Goals  
+- Create an endpoint to retrieve products from the user's cart.  
+
+### Steps  
+1. Build a backend endpoint to fetch cart products using the user’s email.  
+2. Integrate with the cart page.  
+
+---
+
+## Milestone 19: Cart Page UI & Quantity Update  
+
+### Learning Goals  
+- Create a frontend cart page to display products.  
+- Add + and - buttons to adjust quantity.  
+- Write an endpoint to update quantity.  
+
+### Steps  
+1. Design the cart UI and display cart products.  
+2. Implement + and - buttons for quantity control.  
+3. Write an endpoint to update product quantity in the cart.  
+
+---
+
+## Milestone 20: Profile Page  
+
+### Learning Goals  
+- Build a backend endpoint to fetch user data.  
+- Create a frontend profile page to display user info.  
+
+### Steps  
+1. Develop a backend endpoint to send user data.  
+2. Create a profile page displaying photo, name, and email.  
+3. Show address section with an "Add Address" button.  
+4. If no address is found, display "No address found."  
 
