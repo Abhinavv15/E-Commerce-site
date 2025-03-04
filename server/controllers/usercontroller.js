@@ -1,4 +1,3 @@
-
 const user = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -39,14 +38,12 @@ const loginUser = async (req, res) => {
 
         const token = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-
         res.status(200).json({ message: "Login successful", email, token });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Error logging in" });
     }
 };
-
 
 const getUsers = async (req, res) => {
     try {
@@ -57,4 +54,17 @@ const getUsers = async (req, res) => {
     }
 };
 
-module.exports = { createUser, loginUser, getUsers };
+const getUserById = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const userData = await user.findById(userId);
+        if (!userData) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+        res.status(200).send(userData);
+    } catch (error) {
+        res.status(500).send({ error: 'Error fetching user data' });
+    }
+};
+
+module.exports = { createUser, loginUser, getUsers, getUserById };
