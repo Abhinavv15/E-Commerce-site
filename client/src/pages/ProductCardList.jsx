@@ -10,7 +10,7 @@ const ProductCardList = () => {
   useEffect(() => {
     if (!userEmail) return;
 
-    fetch(`http://localhost:6969/getProducts?email=${userEmail}`)
+    fetch(`https://e-commerce-site-0v4v.onrender.com/getProducts?email=${userEmail}`)
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));

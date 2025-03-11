@@ -24,7 +24,7 @@ const PaymentOptions = () => {
   const placeOrder = async () => {
     try {
       const userResponse = await fetch(
-        `http://localhost:6969/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
+        `https://e-commerce-site-0v4v.onrender.com/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
       const userData = await userResponse.json();
@@ -33,7 +33,7 @@ const PaymentOptions = () => {
       if (!userResponse.ok) throw new Error(userData.error || "Failed to fetch user data");
 
       const orderResponse = await fetch(
-        `http://localhost:6969/api/v1/orders/create`,
+        `https://e-commerce-site-0v4v.onrender.com/api/v1/orders/create`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

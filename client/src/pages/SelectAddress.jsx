@@ -22,7 +22,7 @@ const SelectAddress = () => {
     try {
       console.log("Fetching addresses for userEmail:", userEmail);
       const userResponse = await fetch(
-        `http://localhost:6969/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
+        `https://e-commerce-site-0v4v.onrender.com/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const SelectAddress = () => {
       const userId = userData._id;
 
       const profileResponse = await fetch(
-        `http://localhost:6969/api/v1/profile/getProfile?userId=${userId}`,
+        `https://e-commerce-site-0v4v.onrender.com/api/v1/profile/getProfile?userId=${userId}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

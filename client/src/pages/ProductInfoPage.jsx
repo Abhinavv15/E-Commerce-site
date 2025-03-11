@@ -10,7 +10,7 @@ const ProductInfoPage = () => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(
-          `http://localhost:6969/getProduct/${id}`
+          `https://e-commerce-site-0v4v.onrender.com/getProduct/${id}`
         );
         const data = await res.json();
         setProduct(data);
@@ -28,7 +28,7 @@ const ProductInfoPage = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:6969/addToCart/${productId}`,
+        `https://e-commerce-site-0v4v.onrender.com/addToCart/${productId}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -54,7 +54,7 @@ const ProductInfoPage = () => {
   //   }
 
   //   try {
-  //     const res = await fetch(`http://localhost:6969/addToCart/${productId}`, {
+  //     const res = await fetch(`https://e-commerce-site-0v4v.onrender.com/addToCart/${productId}`, {
   //       method: "POST",
   //       headers: { "Content-Type": "application/json" },
   //       body: JSON.stringify({ userEmail, quantity }), // Send userEmail in body

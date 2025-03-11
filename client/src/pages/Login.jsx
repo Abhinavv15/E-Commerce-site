@@ -16,7 +16,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:6969/login",
+        "https://e-commerce-site-0v4v.onrender.com/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

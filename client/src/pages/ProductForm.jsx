@@ -31,7 +31,7 @@
 //     });
 
 //     try {
-//       const response = await fetch("http://localhost:6969/createProduct", {
+//       const response = await fetch("https://e-commerce-site-0v4v.onrender.com/createProduct", {
 //         method: "POST",
 //         body: formData,
 //       });
@@ -165,7 +165,7 @@ const ProductForm = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:6969/createProduct",
+        "https://e-commerce-site-0v4v.onrender.com/createProduct",
         {
           method: "POST",
           body: formData,
@@ -206,7 +206,7 @@ const ProductForm = () => {
   //   });
 
   //   try {
-  //     const response = await fetch("http://localhost:6969/createProduct", {
+  //     const response = await fetch("https://e-commerce-site-0v4v.onrender.com/createProduct", {
   //       method: "POST",
   //       body: formData,
   //     });

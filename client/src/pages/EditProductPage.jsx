@@ -12,7 +12,7 @@ const EditProductPage = () => {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:6969/getProduct/${id}`) // Fetch product details
+    fetch(`https://e-commerce-site-0v4v.onrender.com/getProduct/${id}`) // Fetch product details
       .then((res) => res.json())
       .then((data) => setFormData(data))
       .catch((err) => console.error("Error fetching product:", err));
@@ -26,7 +26,7 @@ const EditProductPage = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:6969/updateProduct/${id}`,
+        `https://e-commerce-site-0v4v.onrender.com/updateProduct/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -47,7 +47,7 @@ const EditProductPage = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         const response = await fetch(
-          `http://localhost:6969/deleteProduct/${id}`,
+          `https://e-commerce-site-0v4v.onrender.com/deleteProduct/${id}`,
           {
             method: "DELETE",
             headers: {

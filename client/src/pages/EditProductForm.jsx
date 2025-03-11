@@ -16,7 +16,7 @@ const EditProductForm = ({ product, onUpdate, onCancel }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:6969/updateProduct/${product._id}`,
+        `https://e-commerce-site-0v4v.onrender.com/updateProduct/${product._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

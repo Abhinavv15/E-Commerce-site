@@ -26,7 +26,7 @@ const OrderConfirmation = () => {
     try {
       console.log("Fetching cart and address for userEmail:", userEmail);
       const cartResponse = await fetch(
-        `http://localhost:6969/getCart?userEmail=${encodeURIComponent(userEmail)}`
+        `https://e-commerce-site-0v4v.onrender.com/getCart?userEmail=${encodeURIComponent(userEmail)}`
       );
       if (!cartResponse.ok) {
         throw new Error(`HTTP error! Status: ${cartResponse.status}`);

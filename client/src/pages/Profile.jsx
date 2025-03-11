@@ -31,7 +31,7 @@ const Profile = () => {
     try {
       // Fetch user _id and details by email
       const userResponse = await fetch(
-        `http://localhost:6969/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
+        `https://e-commerce-site-0v4v.onrender.com/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -51,7 +51,7 @@ const Profile = () => {
 
       // Fetch profile using the user _id
       const profileResponse = await fetch(
-        `http://localhost:6969/api/v1/profile/getProfile?userId=${userId}`,
+        `https://e-commerce-site-0v4v.onrender.com/api/v1/profile/getProfile?userId=${userId}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -63,7 +63,7 @@ const Profile = () => {
         if (profileResponse.status === 404) {
           // No profile exists, create a new one
           const createProfileResponse = await fetch(
-            `http://localhost:6969/api/v1/profile/create`,
+            `https://e-commerce-site-0v4v.onrender.com/api/v1/profile/create`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -90,7 +90,7 @@ const Profile = () => {
 
           // Fetch the newly created profile
           const newProfileResponse = await fetch(
-            `http://localhost:6969/api/v1/profile/getProfile?userId=${userId}`,
+            `https://e-commerce-site-0v4v.onrender.com/api/v1/profile/getProfile?userId=${userId}`,
             {
               method: "GET",
               headers: { "Content-Type": "application/json" },
@@ -147,7 +147,7 @@ const Profile = () => {
     try {
       // Fetch user _id to use in the profile creation/update
       const userResponse = await fetch(
-        `http://localhost:6969/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
+        `https://e-commerce-site-0v4v.onrender.com/getUserByEmail?userEmail=${encodeURIComponent(userEmail)}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -166,7 +166,7 @@ const Profile = () => {
 
       // Fetch the existing profile
       const profileResponse = await fetch(
-        `http://localhost:6969/api/v1/profile/getProfile?userId=${userId}`,
+        `https://e-commerce-site-0v4v.onrender.com/api/v1/profile/getProfile?userId=${userId}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -188,7 +188,7 @@ const Profile = () => {
 
       // Create or update the profile with the new addresses
       const createProfileResponse = await fetch(
-        `http://localhost:6969/api/v1/profile/create`,
+        `https://e-commerce-site-0v4v.onrender.com/api/v1/profile/create`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

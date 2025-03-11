@@ -28,7 +28,7 @@ function CartPage() {
 
       try {
         const res = await fetch(
-          `http://localhost:6969/getCart?userEmail=${userEmail}`
+          `https://e-commerce-site-0v4v.onrender.com/getCart?userEmail=${userEmail}`
         );
 
         if (!res.ok) {
@@ -57,7 +57,7 @@ function CartPage() {
 
     try {
       const res = await fetch(
-        "http://localhost:6969/updateCart",
+        "https://e-commerce-site-0v4v.onrender.com/updateCart",
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -95,7 +95,7 @@ function CartPage() {
   const removeFromCart = async (productId) => {
     try {
       const res = await fetch(
-        "http://localhost:6969/removeFromCart",
+        "https://e-commerce-site-0v4v.onrender.com/removeFromCart",
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },

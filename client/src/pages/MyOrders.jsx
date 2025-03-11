@@ -24,7 +24,7 @@ const MyOrders = () => {
 
       // Step 1: Fetch user _id by email using /getUserByEmail
       const userResponse = await fetch(
-        `http://localhost:6969/getUserByEmail?userEmail=${encodeURIComponent(
+        `https://e-commerce-site-0v4v.onrender.com/getUserByEmail?userEmail=${encodeURIComponent(
           userEmail
         )}`,
         {
@@ -43,7 +43,7 @@ const MyOrders = () => {
 
       // Step 2: Fetch orders using the user _id via /api/v1/orders/user-orders
       const ordersResponse = await fetch(
-        `http://localhost:6969/api/v1/orders/user-orders?userId=${userId}`,
+        `https://e-commerce-site-0v4v.onrender.com/api/v1/orders/user-orders?userId=${userId}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -72,7 +72,7 @@ const MyOrders = () => {
   const handleCancelOrder = async (orderId) => {
     try {
       const response = await fetch(
-        `http://localhost:6969/api/v1/orders/cancel/${orderId}`,
+        `https://e-commerce-site-0v4v.onrender.com/api/v1/orders/cancel/${orderId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
