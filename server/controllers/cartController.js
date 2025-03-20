@@ -4,7 +4,7 @@ const addToCart = async (req, res) => {
   try {
     const { quantity } = req.body;
     const productId = req.params.productId;
-    const userEmail = req.body.userEmail; // Get userEmail from request body
+    const userEmail = req.body.userEmail; 
 
     if (!userEmail) {
       return res.status(400).json({ message: "User email is required" });
@@ -32,40 +32,7 @@ const addToCart = async (req, res) => {
   }
 };
 
-// const removeFromCart = async (req, res) => {
-//   const productId = req.params.productId;
-//   const userEmail = req.body.userEmail;
 
-//   if (!userEmail) {
-//     return res.status(400).json({ message: "User email is required" });
-//   }
-
-//   try {
-//     let cart = await Cart.findOne({ userEmail });
-
-//     if (!cart) {
-//       return res.status(404).json({ message: "Cart not found" });
-//     }
-
-//     const itemIndex = cart.items.findIndex((item) => item.productId.equals(productId));
-
-//     if (itemIndex === -1) {
-//       return res.status(404).json({ message: "Item not found in cart" });
-//     }
-
-//     if (cart.items[itemIndex].quantity > 1) {
-//       cart.items[itemIndex].quantity -= 1;
-//     } else {
-//       cart.items.splice(itemIndex, 1);
-//     }
-
-//     await cart.save();
-//     res.status(200).json({ message: "Item removed from cart", cart });
-//   } catch (error) {
-//     console.error("Error removing item from cart:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
 const removeFromCart = async (req, res) => {
   try {
     const { userEmail, productId } = req.body;
@@ -141,7 +108,6 @@ const getCart = async (req, res) => {
     }
   };
   
-  // module.exports = { addToCart, getCart };
   
   
   

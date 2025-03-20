@@ -368,3 +368,62 @@ This project is all about creating a fully functional e-commerce website where u
 2. **Integrate PayPal** – Use `@paypal/react-paypal-js` for online payments.  
 3. **Save Order on Success** – Call `/api/v1/orders/create` after successful payment.  
 4. **Redirect on Completion** – Navigate to `/order-success` after order placement.  
+
+
+# Milestone 31: Redux Setup  
+
+## Learning Goals  
+- Implement Redux for global state management.  
+- Store user email in Redux instead of localStorage.  
+
+## Steps  
+1. **Install Redux** – Installed `react-redux` and created a `store` folder.  
+2. **Configure Store** – Set up `store.js` with `userReducer` to manage email state.  
+3. **Define Actions** – Created `setEmail` function in `userActions.js`.  
+4. **Integrate Redux** – Wrapped `App` with `Provider` in `main.jsx`.  
+
+---
+
+# Milestone 32: Redux Email Management  
+
+## Learning Goals  
+- Store and retrieve user email using Redux.  
+- Eliminate redundant email storage in localStorage and URL params.  
+
+## Steps  
+1. **Update Login Page** – Used `useDispatch` to store email in Redux after login.  
+2. **Use Redux in Components** – Modified `OrderConfirmation`, `PaymentOptions`, and `MyOrders` to access email via `useSelector`.  
+3. **Remove Redundant Storage** – Removed `localStorage.setItem("userEmail")`.  
+4. **Add Authentication Check** – Redirected unauthenticated users to login.  
+
+---
+
+# Milestone 33: JWT Authentication  
+
+## Learning Goals  
+- Implement JWT-based authentication with cookies.  
+- Secure authentication using `httpOnly` cookies.  
+
+## Steps  
+1. **Install jsonwebtoken** – Added `jsonwebtoken` to the backend.  
+2. **Generate JWT** – Updated `loginUser` to create a token with `jwt.sign`.  
+3. **Set Expiration & Cookie** – Configured a 1-hour expiration and sent the token via `res.cookie`.  
+4. **Update Frontend** – Removed `localStorage.setItem("token")`, relying on cookies instead.  
+
+---
+
+# Milestone 34: Cookie-Based Authentication  
+
+## Learning Goals  
+- Secure authentication with middleware and `httpOnly` cookies.  
+- Persist Redux state across refreshes.  
+
+## Steps  
+1. **Create Middleware** – Added `authenticateToken` to validate `authToken`.  
+2. **Protect Routes** – Applied middleware to `/getCart` and `/getProfile`.  
+3. **Update Profile Feature** – Used `req.user.id` to fetch profile data.  
+4. **Enable Cookies in Requests** – Set `credentials: "include"` in fetch calls.  
+5. **Persist Redux State** – Added `redux-persist` to store user email across refreshes.  
+6. **Handle Unauthorized Access** – Redirected users to login on `401/403` errors.  
+
+

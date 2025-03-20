@@ -1,36 +1,38 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setEmaill } from "../store/userAction.js"; 
+
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent form reload
-
+    e.preventDefault();
+  
     if (!email || !password) {
       alert("Please enter both email and password");
       return;
     }
-
+  
     try {
-      const response = await fetch(
-        "https://e-commerce-site-0v4v.onrender.com/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
+      const response = await fetch("https://e-commerce-site-0v4v.onrender.com/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // Allow cookies to be set
+        body: JSON.stringify({ email, password }),
+      });
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         alert("Login successful!");
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("token", data.token);
-        navigate("/"); // Redirect to products page
+        console.log("setEmail (useState):", setEmail); 
+        dispatch(setEmaill(email));
+        navigate("/home");
       } else {
         alert(data.error || "Login failed");
       }

@@ -1,7 +1,6 @@
-
-
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const OrderConfirmation = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -11,7 +10,8 @@ const OrderConfirmation = () => {
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const userEmail = searchParams.get("userEmail");
+  // const userEmail = searchParams.get("userEmail");
+  const userEmail=useSelector((state)=>state.user.email);
   const addressParam = searchParams.get("address");
 
   useEffect(() => {
